@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <form id="form" action="@Url.Action("Analysis","Home")" enctype="multipart/form-data" method="post">
+
+                    <div class="customMx">
+                        <label for="file-upload" class="custom-file-upload">
+                            <span class="spanInputText">File not chosen</span>
+                        </label>
+                        <input type="file" id="file-upload" class="customMxInput" name="allfiles" accept=".csv" required>
+                        <button type="submit" class="searchBtn"> <img src="~/file-export-solid.svg" width="15" style="padding: 0px 0px 3px 0;" /> Start search</button>
+
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <div class="loadingio-spinner-pulse-7vvqe6ujdap  text-center"><div class="ldio-xe6jwsry8e"> <div></div><div></div><div></div> </div></div>
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var input = document.querySelector(".customMxInput");
+    var text = document.querySelector(".spanInputText")
+    var button = document.querySelector(".searchBtn");
+    var bar = document.querySelector(".loadingio-spinner-pulse-7vvqe6ujdap");
+
+    input.addEventListener("change", function (e) {
+        if (e.target.files[0] != null)
+            text.innerHTML = e.target.files[0].name
+        else
+            text.innerHTML = "File not chosen"
+
+    });
+
+    button.addEventListener("click", function () {
+        if (text.innerHTML != "File not chosen")
+            bar.style.display = "inline-block";
+        else
+            bar.style.display = "none"
+    })
+
+
+</script>

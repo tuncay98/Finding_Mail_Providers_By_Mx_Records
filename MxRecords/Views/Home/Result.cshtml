@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style="margin-top: 40px;">
+    <div class="row" style="height: 120px;">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 text-center">
+            <a class="downloadLink" href="@ViewBag.link" download>Download</a>
+        </div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 text-center">
+            <a href="@Url.Action("Index","Home")" style="color: black"> <-Back </a>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+</div>
+
