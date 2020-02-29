@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MxRecords.Models
@@ -12,17 +13,26 @@ namespace MxRecords.Models
             List<string> mails = new List<string>();
             sbyte index = 0;
 
+            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,50})+)$");
+             
+
             string[] fileStream = System.IO.File.ReadAllLines(path);
 
-            string[] columns = fileStream[0].Split(',');
-            int indexOfProvider = 0;
+            //int indexOfProvider = 0;
 
-            for (int i = 0; i < columns.Length; i++)
+
+
+            /*foreach (var line in fileStream)
             {
-                if (columns[i] == "Email" || columns[i] == "email" || columns[i] == "e-mail" || columns[i] == "E-mail")
+                string[] columns = line.Split(',');
+
+                for (int i = 0; i < columns.Length; i++)
                 {
-                    indexOfProvider = i;
-                    break;
+                    if (regex.IsMatch(columns[i]))
+                    {
+                        indexOfProvider = i;
+                        break;
+                    }
                 }
             }
 
@@ -36,6 +46,26 @@ namespace MxRecords.Models
                 List<string> splitLine = line.Split(',').ToList();
 
                 mails.Add(splitLine[indexOfProvider]);
+            }*/
+
+            foreach (string line in fileStream)
+            {
+                string newLine = line.Replace(", ", "~~<");
+                if (index == 0)
+                {
+                    index = 1;
+                    continue;
+                }
+                List<string> splitLine = newLine.Split(',').ToList();
+
+                foreach (var item in splitLine)
+                {
+                    if (regex.IsMatch(item))
+                    {
+                        mails.Add(item);
+                        break;
+                    }
+                }
             }
 
             return mails;
@@ -43,7 +73,6 @@ namespace MxRecords.Models
 
         public static void WriteCsv(string path, List<string> mails)
         {
-
             string[] fileStreamArray = System.IO.File.ReadAllLines(path);
             List<string> fileStream = fileStreamArray.ToList();
             int indexOfFile = 0;

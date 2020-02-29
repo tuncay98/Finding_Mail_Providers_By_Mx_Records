@@ -1,0 +1,64 @@
+﻿@model List<MxRecords.Models.Log>
+@{
+    ViewData["Title"] = "ViewLogFile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <div style="overflow:auto;">
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Session</th>
+                    <th>Visited</th>
+                    <th>File name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int index = 0;}
+                @foreach (var item in Model)
+                {  index++; var link = ViewBag.hostlink + item.uploadedFile;
+                    <tr>
+                        <td>@index</td>
+                        <td>@item.session</td>
+                        <td class="time">@item.enteredTime</td>
+                        <td>
+                            @item.uploadedFile
+                        </td>
+                    </tr>
+                  
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+<script>
+    var times = document.querySelectorAll(".time");
+    var zone = -1 *((new Date().getTimezoneOffset()) / 60)
+
+    for (var i = 0; i < times.length; i++) {
+        var datetime = new Date(times[i].innerHTML);
+
+        datetime.setHours(datetime.getHours() + zone)
+
+        times[i].innerHTML = datetime.toLocaleDateString() + " " + datetime.toLocaleTimeString()
+
+    }
+</script>
